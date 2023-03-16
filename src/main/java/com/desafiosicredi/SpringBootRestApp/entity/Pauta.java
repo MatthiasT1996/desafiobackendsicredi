@@ -1,6 +1,9 @@
 package com.desafiosicredi.SpringBootRestApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "pauta")
@@ -15,6 +18,10 @@ public class Pauta {
 
     @Column(name = "fechada", nullable = false)
     private Boolean fechada;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "pauta")
+    private List<VotacaoPauta> votacaoPautaList;
 
     public Integer getId() {
         return id;
@@ -38,5 +45,13 @@ public class Pauta {
 
     public void setFechada(Boolean fechada) {
         this.fechada = fechada;
+    }
+
+    public List<VotacaoPauta> getVotacaoPautaList() {
+        return votacaoPautaList;
+    }
+
+    public void setVotacaoPautaList(List<VotacaoPauta> votacaoPautaList) {
+        this.votacaoPautaList = votacaoPautaList;
     }
 }

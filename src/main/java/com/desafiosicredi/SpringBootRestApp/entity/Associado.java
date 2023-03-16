@@ -1,6 +1,9 @@
 package com.desafiosicredi.SpringBootRestApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "associado")
@@ -16,6 +19,10 @@ public class Associado {
 
     @Column(nullable = false)
     private String nome;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "associado")
+    private List<VotacaoPauta> votacaoPautaList;
 
     public Associado() {
     }
@@ -47,5 +54,13 @@ public class Associado {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public List<VotacaoPauta> getVotacaoPautaList() {
+        return votacaoPautaList;
+    }
+
+    public void setVotacaoPautaList(List<VotacaoPauta> votacaoPautaList) {
+        this.votacaoPautaList = votacaoPautaList;
     }
 }

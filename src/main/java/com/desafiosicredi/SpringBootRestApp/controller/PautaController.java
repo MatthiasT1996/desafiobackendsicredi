@@ -16,83 +16,83 @@ import java.util.Optional;
 public class PautaController {
 
     @Autowired
-    PautaRepository cargoRepository;
+    PautaRepository pautaRepository;
 
-    @ApiOperation(value = "Método que busca o Cargo pelo ID")
+    @ApiOperation(value = "Método que busca a Pauta pelo ID")
     @GetMapping("/{id}")
     public ResponseEntity<Pauta> listarById(@PathVariable Integer id) {
-        Optional<Pauta> optional = cargoRepository.findById(id);
+        Optional<Pauta> optional = pautaRepository.findById(id);
         if (optional.isPresent()) {
-            Pauta cargo = cargoRepository.findById(id).get();
-            return new ResponseEntity<>(cargo, HttpStatus.OK);
+            Pauta pauta = pautaRepository.findById(id).get();
+            return new ResponseEntity<>(pauta, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @ApiOperation(value = "Método que busca o Cargo pelo nome")
+    @ApiOperation(value = "Método que busca a Pauta pelo nome")
     @GetMapping("/pesquisar/{nome}")
     public ResponseEntity<Pauta> findByNome(@PathVariable String nome) {
-        Optional<Pauta> optional = cargoRepository.findByNome(nome);
+        Optional<Pauta> optional = pautaRepository.findByNome(nome);
         if (optional.isPresent()) {
-            Pauta cargo = cargoRepository.findByNome(nome).get();
-            return new ResponseEntity<>(cargo, HttpStatus.OK);
+            Pauta pauta = pautaRepository.findByNome(nome).get();
+            return new ResponseEntity<>(pauta, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @ApiOperation(value = "Método que lsita todos Cargo cadastrados")
+    @ApiOperation(value = "Método que lista todas Pautas cadastradas")
     @GetMapping
     public List<Pauta> listar() {
-        return (List<Pauta>) cargoRepository.findAll();
+        return (List<Pauta>) pautaRepository.findAll();
     }
 
-    @ApiOperation(value = "Método que faz a insclusão do Cargo")
+    @ApiOperation(value = "Método que faz a inclusão da Pauta")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Pauta> inserir(@RequestBody Pauta cargo) {
-        cargoRepository.save(cargo);
+    public ResponseEntity<Pauta> inserir(@RequestBody Pauta pauta) {
+        pautaRepository.save(pauta);
 
-        return new ResponseEntity<>(cargo, HttpStatus.CREATED);
+        return new ResponseEntity<>(pauta, HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "Método que faz a alteração do Cargo por ID")
+    @ApiOperation(value = "Método que faz a alteração da Pauta por ID")
     @PutMapping("/alterarPorId/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<Pauta> atualizarPorId(@RequestBody Pauta cargo, @PathVariable Integer id) {
-        Optional<Pauta> cargoOptional = cargoRepository.findById(id);
-        if (cargoOptional.isPresent()) {
-            Pauta cargoAtualizado = cargoOptional.get();
-            cargoAtualizado.setNome(cargo.getNome());
-            cargoRepository.save(cargoAtualizado);
-            return new ResponseEntity<>(cargo, HttpStatus.ACCEPTED);
+    public ResponseEntity<Pauta> atualizarPorId(@RequestBody Pauta pauta, @PathVariable Integer id) {
+        Optional<Pauta> pautaOptional = pautaRepository.findById(id);
+        if (pautaOptional.isPresent()) {
+            Pauta pautaAtualizado = pautaOptional.get();
+            pautaAtualizado.setNome(pauta.getNome());
+            pautaRepository.save(pautaAtualizado);
+            return new ResponseEntity<>(pauta, HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
     }
 
-    @ApiOperation(value = "Método que faz a alteração do Cargo por nome")
+    @ApiOperation(value = "Método que faz a alteração da Pauta por nome")
     @PutMapping("/alterarPorNome/{nome}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<Pauta> atualizarPorNome(@RequestBody Pauta cargo, @PathVariable String nome) {
-        Optional<Pauta> cargoOptional = cargoRepository.findByNome(nome);
-        if (cargoOptional.isPresent()) {
-            Pauta cargoAtualizado = cargoOptional.get();
-            cargoAtualizado.setNome(cargo.getNome());
-            cargoRepository.save(cargoAtualizado);
-            return new ResponseEntity<>(cargo, HttpStatus.ACCEPTED);
+    public ResponseEntity<Pauta> atualizarPorNome(@RequestBody Pauta pauta, @PathVariable String nome) {
+        Optional<Pauta> pautaOptional = pautaRepository.findByNome(nome);
+        if (pautaOptional.isPresent()) {
+            Pauta pautaAtualizado = pautaOptional.get();
+            pautaAtualizado.setNome(pauta.getNome());
+            pautaRepository.save(pautaAtualizado);
+            return new ResponseEntity<>(pauta, HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
     }
 
-    @ApiOperation(value = "Método que exclui o Cargo pelo ID")
+    @ApiOperation(value = "Método que exclui a Pauta pelo ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Pauta> remover(@PathVariable Integer id) {
-        cargoRepository.deleteById(id);
+        pautaRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

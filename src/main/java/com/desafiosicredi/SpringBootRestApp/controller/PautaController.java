@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +53,18 @@ public class PautaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> inserir(@RequestBody Pauta pauta) {
+        Integer tempoFechamentoPauta = pauta.getTempoFechamento();
+
+        if(tempoFechamentoPauta == null){
+            tempoFechamentoPauta = 60;
+            pauta.setTempoFechamento(60);
+        }
+
+        LocalDateTime dataInicioPauta =  LocalDateTime.now();
+        LocalDateTime dataFimPauta = dataInicioPauta.plusSeconds(tempoFechamentoPauta);
+        pauta.setDataInicioPauta(dataInicioPauta);
+        pauta.setDataFimPauta(dataFimPauta);
+
         pautaRepository.save(pauta);
 
         return new ResponseEntity<>("Pauta adicionada com sucesso!", HttpStatus.CREATED);

@@ -100,9 +100,13 @@ public class VotacaoPautaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<VotacaoPauta> inserir(@RequestBody VotacaoPauta votacaoPauta) {
-        votacaoPautaRepository.save(votacaoPauta);
-
-        return new ResponseEntity<>(votacaoPauta, HttpStatus.CREATED);
+        List<VotacaoPauta> listaVotacaoPauta = votacaoPautaRepository.listarByIdPautaAndIdAssociado(votacaoPauta.getPauta().getId(), votacaoPauta.getAssociado().getId());
+        if (listaVotacaoPauta.isEmpty()) {
+            votacaoPautaRepository.save(votacaoPauta);
+            return new ResponseEntity<>(votacaoPauta, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
     }
 
 

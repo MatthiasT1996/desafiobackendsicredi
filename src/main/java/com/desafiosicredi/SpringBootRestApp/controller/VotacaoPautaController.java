@@ -100,6 +100,10 @@ public class VotacaoPautaController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> inserir(@RequestBody VotacaoPauta votacaoPauta) {
+        List<Pauta> listaPauta = pautaRepository.isPautaFechada(votacaoPauta.getPauta().getId());
+        if(!listaPauta.isEmpty()){
+            return new ResponseEntity<>("Impossível computar o voto, Pauta já está fechada.", HttpStatus.CONFLICT);
+        }
         List<VotacaoPauta> listaVotacaoPauta = votacaoPautaRepository.listarByIdPautaAndIdAssociado(votacaoPauta.getPauta().getId(), votacaoPauta.getAssociado().getId());
         if (listaVotacaoPauta.isEmpty()) {
             votacaoPautaRepository.save(votacaoPauta);

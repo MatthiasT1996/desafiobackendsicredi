@@ -51,53 +51,42 @@ public class AssociadoController {
     @ApiOperation(value = "Método que faz a inclusão do Associado")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Associado> inserir(@RequestBody Associado associado) {
+    public ResponseEntity<String> inserir(@RequestBody Associado associado) {
         if (!associadoRepository.existsByCpf(associado.getCpf())) {
             associadoRepository.save(associado);
-            return new ResponseEntity<>(associado, HttpStatus.CREATED);
+            return new ResponseEntity<>("Associado adicionado com sucesso!", HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Associado já cadastrado!", HttpStatus.CONFLICT);
         }
     }
 
     @ApiOperation(value = "Método que faz a alteração do Associado por ID")
     @PutMapping("/alterarPorId/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<Associado> atualizarPorId(@RequestBody Associado associado, @PathVariable Integer id) {
+    public ResponseEntity<String> atualizarPorId(@RequestBody Associado associado, @PathVariable Integer id) {
         Optional<Associado> associadoOptional = associadoRepository.findById(id);
         if (associadoOptional.isPresent()) {
             Associado associadoAtualizado = associadoOptional.get();
             associadoAtualizado.setNome(associado.getNome());
             associadoRepository.save(associadoAtualizado);
-            return new ResponseEntity<>(associado, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>("Associado alterado com sucesso!", HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-
-    }
-
-    @ApiOperation(value = "Método que faz a alteração do Associado por nome")
-    @PutMapping("/alterarPorNome/{nome}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<Associado> atualizarPorNome(@RequestBody Associado associado, @PathVariable String nome) {
-        Optional<Associado> associadoOptional = associadoRepository.findByNome(nome);
-        if (associadoOptional.isPresent()) {
-            Associado associadoAtualizado = associadoOptional.get();
-            associadoAtualizado.setNome(associado.getNome());
-            associadoRepository.save(associadoAtualizado);
-            return new ResponseEntity<>(associado, HttpStatus.ACCEPTED);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Associado não encontrado!", HttpStatus.NOT_FOUND);
         }
 
     }
 
     @ApiOperation(value = "Método que exclui o Associado pelo ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Associado> remover(@PathVariable Integer id) {
-        associadoRepository.deleteById(id);
+    public ResponseEntity<String> remover(@PathVariable Integer id) {
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        Optional<Associado> associadoOptional = associadoRepository.findById(id);
+        if (associadoOptional.isPresent()) {
+            associadoRepository.deleteById(id);
+            return new ResponseEntity<>("Associado excluído com sucesso!", HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>("Associado não encontrado!", HttpStatus.NOT_FOUND);
+        }
     }
 
 }

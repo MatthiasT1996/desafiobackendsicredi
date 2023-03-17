@@ -51,24 +51,24 @@ public class PautaController {
     @ApiOperation(value = "Método que faz a inclusão da Pauta")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Pauta> inserir(@RequestBody Pauta pauta) {
+    public ResponseEntity<String> inserir(@RequestBody Pauta pauta) {
         pautaRepository.save(pauta);
 
-        return new ResponseEntity<>(pauta, HttpStatus.CREATED);
+        return new ResponseEntity<>("Pauta adicionada com sucesso!", HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Método que faz a alteração da Pauta por ID")
     @PutMapping("/alterarPorId/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<Pauta> atualizarPorId(@RequestBody Pauta pauta, @PathVariable Integer id) {
+    public ResponseEntity<String> atualizarPorId(@RequestBody Pauta pauta, @PathVariable Integer id) {
         Optional<Pauta> pautaOptional = pautaRepository.findById(id);
         if (pautaOptional.isPresent()) {
             Pauta pautaAtualizado = pautaOptional.get();
             pautaAtualizado.setNome(pauta.getNome());
             pautaRepository.save(pautaAtualizado);
-            return new ResponseEntity<>(pauta, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>("Pauta alterada com sucesso!", HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Pauta não encontrada!", HttpStatus.NOT_FOUND);
         }
 
     }
@@ -76,25 +76,29 @@ public class PautaController {
     @ApiOperation(value = "Método que faz a alteração da Pauta por nome")
     @PutMapping("/alterarPorNome/{nome}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<Pauta> atualizarPorNome(@RequestBody Pauta pauta, @PathVariable String nome) {
+    public ResponseEntity<String> atualizarPorNome(@RequestBody Pauta pauta, @PathVariable String nome) {
         Optional<Pauta> pautaOptional = pautaRepository.findByNome(nome);
         if (pautaOptional.isPresent()) {
             Pauta pautaAtualizado = pautaOptional.get();
             pautaAtualizado.setNome(pauta.getNome());
             pautaRepository.save(pautaAtualizado);
-            return new ResponseEntity<>(pauta, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>("Pauta alterada com sucesso!", HttpStatus.ACCEPTED);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Pauta não encontrada!", HttpStatus.NOT_FOUND);
         }
 
     }
 
     @ApiOperation(value = "Método que exclui a Pauta pelo ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Pauta> remover(@PathVariable Integer id) {
-        pautaRepository.deleteById(id);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> remover(@PathVariable Integer id) {
+        Optional<Pauta> pautaOptional = pautaRepository.findById(id);
+        if (pautaOptional.isPresent()) {
+            pautaRepository.deleteById(id);
+            return new ResponseEntity<>("Pauta excluída com sucesso!", HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>("Pauta não encontrada!", HttpStatus.NOT_FOUND);
+        }
     }
 
 }

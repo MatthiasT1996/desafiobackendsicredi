@@ -99,23 +99,27 @@ public class VotacaoPautaController {
     @ApiOperation(value = "Método que faz a inclusão da Votação da Pauta")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<VotacaoPauta> inserir(@RequestBody VotacaoPauta votacaoPauta) {
+    public ResponseEntity<String> inserir(@RequestBody VotacaoPauta votacaoPauta) {
         List<VotacaoPauta> listaVotacaoPauta = votacaoPautaRepository.listarByIdPautaAndIdAssociado(votacaoPauta.getPauta().getId(), votacaoPauta.getAssociado().getId());
         if (listaVotacaoPauta.isEmpty()) {
             votacaoPautaRepository.save(votacaoPauta);
-            return new ResponseEntity<>(votacaoPauta, HttpStatus.CREATED);
+            return new ResponseEntity<>("Voto computado com sucesso!", HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Impossível computar o voto, Associado já votou nessa pauta.", HttpStatus.CONFLICT);
         }
     }
 
 
     @ApiOperation(value = "Método que exclui a Votação da Pauta pelo ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<VotacaoPauta> remover(@PathVariable Integer id) {
-        votacaoPautaRepository.deleteById(id);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> remover(@PathVariable Integer id) {
+        Optional<VotacaoPauta> VotacaoPautaOptional = votacaoPautaRepository.findById(id);
+        if (VotacaoPautaOptional.isPresent()) {
+            votacaoPautaRepository.deleteById(id);
+            return new ResponseEntity<>("Voto excluído com sucesso!", HttpStatus.ACCEPTED);
+        } else {
+            return new ResponseEntity<>("Voto não encontrada!", HttpStatus.NOT_FOUND);
+        }
     }
 
 }

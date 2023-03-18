@@ -2,6 +2,7 @@ package com.desafiosicredi.SpringBootRestApp.controller;
 
 import com.desafiosicredi.SpringBootRestApp.entity.Pauta;
 import com.desafiosicredi.SpringBootRestApp.repository.PautaRepository;
+import com.desafiosicredi.SpringBootRestApp.senders.QueueSender;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

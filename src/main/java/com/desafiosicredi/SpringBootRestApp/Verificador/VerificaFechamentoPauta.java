@@ -2,6 +2,7 @@ package com.desafiosicredi.SpringBootRestApp.Verificador;
 
 import com.desafiosicredi.SpringBootRestApp.entity.Pauta;
 import com.desafiosicredi.SpringBootRestApp.repository.PautaRepository;
+import com.desafiosicredi.SpringBootRestApp.senders.QueueSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,14 +21,18 @@ public class VerificaFechamentoPauta {
     @Autowired
     PautaRepository pautaRepository;
 
+    @Autowired
+    private QueueSender queueSender;
+
     @Scheduled(fixedDelay = MINUTO)
     public void verificaPorMinuto() {
         List<Pauta> listaPauta = (List<Pauta>) pautaRepository.findAll();
         LocalDateTime dataAtual = LocalDateTime.now();
         for (Pauta pauta : listaPauta) {
-            if(pauta.getDataFimPauta().isBefore(dataAtual)){
+            if(!pauta.getFechada() && pauta.getDataFimPauta().isBefore(dataAtual)){
                 pauta.setFechada(true);
                 pautaRepository.save(pauta);
+                queueSender.send("Pauta " + pauta.getNome() + " fechada às " + LocalDateTime.now());
             }
         }
 

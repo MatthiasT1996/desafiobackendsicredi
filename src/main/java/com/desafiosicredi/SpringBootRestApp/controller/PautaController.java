@@ -1,6 +1,8 @@
 package com.desafiosicredi.SpringBootRestApp.controller;
 
+import com.desafiosicredi.SpringBootRestApp.entity.Log;
 import com.desafiosicredi.SpringBootRestApp.entity.Pauta;
+import com.desafiosicredi.SpringBootRestApp.repository.LogRepository;
 import com.desafiosicredi.SpringBootRestApp.repository.PautaRepository;
 import com.desafiosicredi.SpringBootRestApp.senders.QueueSender;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +21,9 @@ public class PautaController {
 
     @Autowired
     PautaRepository pautaRepository;
+
+    @Autowired
+    LogRepository logRepository;
 
     @ApiOperation(value = "Método que busca a Pauta pelo ID")
     @GetMapping("/{id}")
@@ -68,6 +73,9 @@ public class PautaController {
 
         pautaRepository.save(pauta);
 
+        Log log = new Log("Pauta " + pauta.getNome() + " incluída com sucesso", LocalDateTime.now());
+        logRepository.save(log);
+
         return new ResponseEntity<>("Pauta adicionada com sucesso!", HttpStatus.CREATED);
     }
 
@@ -80,6 +88,8 @@ public class PautaController {
             Pauta pautaAtualizado = pautaOptional.get();
             pautaAtualizado.setNome(pauta.getNome());
             pautaRepository.save(pautaAtualizado);
+            Log log = new Log("Pauta " + pautaAtualizado.getNome() + " alterada com sucesso", LocalDateTime.now());
+            logRepository.save(log);
             return new ResponseEntity<>("Pauta alterada com sucesso!", HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>("Pauta não encontrada!", HttpStatus.NOT_FOUND);
@@ -96,6 +106,8 @@ public class PautaController {
             Pauta pautaAtualizado = pautaOptional.get();
             pautaAtualizado.setNome(pauta.getNome());
             pautaRepository.save(pautaAtualizado);
+            Log log = new Log("Pauta " + pautaAtualizado.getNome() + " alterada com sucesso", LocalDateTime.now());
+            logRepository.save(log);
             return new ResponseEntity<>("Pauta alterada com sucesso!", HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>("Pauta não encontrada!", HttpStatus.NOT_FOUND);
@@ -108,6 +120,8 @@ public class PautaController {
     public ResponseEntity<String> remover(@PathVariable Integer id) {
         Optional<Pauta> pautaOptional = pautaRepository.findById(id);
         if (pautaOptional.isPresent()) {
+            Log log = new Log("Pauta " + pautaOptional.get().getNome() + " excluída com sucesso", LocalDateTime.now());
+            logRepository.save(log);
             pautaRepository.deleteById(id);
             return new ResponseEntity<>("Pauta excluída com sucesso!", HttpStatus.ACCEPTED);
         } else {

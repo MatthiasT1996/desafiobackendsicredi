@@ -1,14 +1,16 @@
 package com.desafiosicredi.SpringBootRestApp.controller;
 
 import com.desafiosicredi.SpringBootRestApp.entity.Associado;
+import com.desafiosicredi.SpringBootRestApp.entity.Log;
 import com.desafiosicredi.SpringBootRestApp.repository.AssociadoRepository;
-import com.desafiosicredi.SpringBootRestApp.senders.QueueSender;
+import com.desafiosicredi.SpringBootRestApp.repository.LogRepository;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +21,9 @@ public class AssociadoController {
 
     @Autowired
     AssociadoRepository associadoRepository;
+
+    @Autowired
+    LogRepository logRepository;
 
     @ApiOperation(value = "Método que busca o Associado pelo ID")
     @GetMapping("/{id}")
@@ -58,6 +63,8 @@ public class AssociadoController {
             return new ResponseEntity<>("CPF inválido!", HttpStatus.NOT_ACCEPTABLE);
         }
         if (!associadoRepository.existsByCpf(associado.getCpf())) {
+            Log log = new Log("Associado " + associado.getCpf() + " incluído com sucesso", LocalDateTime.now());
+            logRepository.save(log);
             associadoRepository.save(associado);
             return new ResponseEntity<>("Associado adicionado com sucesso!", HttpStatus.CREATED);
         } else {
@@ -74,6 +81,8 @@ public class AssociadoController {
             Associado associadoAtualizado = associadoOptional.get();
             associadoAtualizado.setNome(associado.getNome());
             associadoRepository.save(associadoAtualizado);
+            Log log = new Log("Associado " + associadoAtualizado.getCpf() + " alterado com sucesso", LocalDateTime.now());
+            logRepository.save(log);
             return new ResponseEntity<>("Associado alterado com sucesso!", HttpStatus.ACCEPTED);
         } else {
             return new ResponseEntity<>("Associado não encontrado!", HttpStatus.NOT_FOUND);
@@ -87,6 +96,8 @@ public class AssociadoController {
 
         Optional<Associado> associadoOptional = associadoRepository.findById(id);
         if (associadoOptional.isPresent()) {
+            Log log = new Log("Associado " + associadoOptional.get().getCpf() + " excluído com sucesso", LocalDateTime.now());
+            logRepository.save(log);
             associadoRepository.deleteById(id);
             return new ResponseEntity<>("Associado excluído com sucesso!", HttpStatus.ACCEPTED);
         } else {

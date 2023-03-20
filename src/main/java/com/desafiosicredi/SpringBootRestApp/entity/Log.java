@@ -17,6 +17,14 @@ public class Log {
     @Column(name = "data_log")
     private LocalDateTime dataLog;
 
+    public Log() {
+    }
+
+    public Log(String mensagem, LocalDateTime dataLog) {
+        this.mensagem = mensagem;
+        this.dataLog = dataLog;
+    }
+
     public Integer getId() {
         return id;
     }

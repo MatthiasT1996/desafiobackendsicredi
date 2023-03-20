@@ -17,6 +17,7 @@ import java.util.List;
 @EnableScheduling
 public class VerificaFechamentoPauta {
     private final long SEGUNDO = 1000;
+    private final long MEIO_MINUTO = SEGUNDO * 30;
     private final long MINUTO = SEGUNDO * 60;
     private final long HORA = MINUTO * 60;
 
@@ -29,7 +30,7 @@ public class VerificaFechamentoPauta {
     @Autowired
     private QueueSender queueSender;
 
-    @Scheduled(fixedDelay = MINUTO)
+    @Scheduled(fixedDelay = MEIO_MINUTO)
     public void verificaPorMinuto() {
         List<Pauta> listaPauta = (List<Pauta>) pautaRepository.findAll();
         LocalDateTime dataAtual = LocalDateTime.now();
@@ -42,9 +43,7 @@ public class VerificaFechamentoPauta {
 
                 mensagem = "Pauta " + pauta.getNome() + " fechada às " + dataAtual;
 
-                log = new Log();
-                log.setMensagem(mensagem);
-                log.setDataLog(dataAtual);
+                log = new Log(mensagem, dataAtual);
                 logRepository.save(log);
 
                 queueSender.send(mensagem);

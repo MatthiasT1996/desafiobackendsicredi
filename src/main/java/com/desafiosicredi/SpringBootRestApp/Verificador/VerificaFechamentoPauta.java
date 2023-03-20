@@ -30,7 +30,7 @@ public class VerificaFechamentoPauta {
     @Autowired
     private QueueSender queueSender;
 
-    @Scheduled(fixedDelay = MEIO_MINUTO)
+    @Scheduled(fixedDelay = MINUTO)
     public void verificaPorMinuto() {
         List<Pauta> listaPauta = (List<Pauta>) pautaRepository.findAll();
         LocalDateTime dataAtual = LocalDateTime.now();

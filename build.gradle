@@ -1,8 +1,4 @@
-plugins {
-	id 'org.springframework.boot' version '2.6.12'
-	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
-	id 'java'
-}
+
 
 group = 'com.desafiosicredi'
 version = '0.0.1-SNAPSHOT'

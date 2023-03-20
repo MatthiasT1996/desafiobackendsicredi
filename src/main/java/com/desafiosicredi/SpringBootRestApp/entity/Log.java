@@ -2,6 +2,7 @@ package com.desafiosicredi.SpringBootRestApp.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "logs")
@@ -9,7 +10,7 @@ public class Log {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private UUID id;
 
     @Column(nullable = false)
     private String mensagem;
@@ -25,11 +26,11 @@ public class Log {
         this.dataLog = dataLog;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -1,6 +1,7 @@
 package com.desafiosicredi.SpringBootRestApp.entity;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "votacao_pauta")
@@ -8,7 +9,7 @@ public class VotacaoPauta {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private UUID id;
 
     @Column(name = "aprovada", nullable = false)
     private Boolean aprovada;
@@ -21,11 +22,11 @@ public class VotacaoPauta {
     @JoinColumn(name = "id_associado")
     private Associado associado;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/votacaopauta")
@@ -75,7 +76,7 @@ public class VotacaoPautaController {
         VotacaoPautaDTO votacaoPautaDTO = new VotacaoPautaDTO();
         for (VotacaoPauta votacaoPauta :
                 listaVotacaoPauta) {
-            Integer idPauta = votacaoPauta.getPauta().getId();
+            UUID idPauta = votacaoPauta.getPauta().getId();
             if(idPauta == votacaoPautaDTO.getIdPauta()){
                 if (votacaoPauta.getAprovada()) {
                     votacaoPautaDTO.setVotosSim(votacaoPautaDTO.getVotosSim() + 1);

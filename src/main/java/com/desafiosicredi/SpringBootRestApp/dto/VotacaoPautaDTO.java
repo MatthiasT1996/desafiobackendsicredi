@@ -6,10 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
 public class VotacaoPautaDTO implements Serializable {
 
-    private Integer idPauta;
+    private UUID idPauta;
 
     private Integer votosSim;
 
@@ -20,11 +21,11 @@ public class VotacaoPautaDTO implements Serializable {
         this.votosNao = 0;
     }
 
-    public Integer getIdPauta() {
+    public UUID getIdPauta() {
         return idPauta;
     }
 
-    public void setIdPauta(Integer idPauta) {
+    public void setIdPauta(UUID idPauta) {
         this.idPauta = idPauta;
     }
 

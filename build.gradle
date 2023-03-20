@@ -25,7 +25,7 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-integration')
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 
-	compile 'org.springframework.integration:spring-integration-amqp'
+//	compile "org.springframework.integration:spring-integration-amqp:6.0.3"
 }
 
 tasks.named('test') {

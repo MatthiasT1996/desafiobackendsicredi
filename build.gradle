@@ -28,15 +28,6 @@ dependencies {
 	compile 'org.springframework.integration:spring-integration-amqp'
 }
 
-jar {
-	manifest {
-		attributes(
-				'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-				'Main-Class': 'com.desafiosicredi.SpringBootRestApp.SpringBootRestAppApplication'
-		)
-	}
-}
-
 tasks.named('test') {
 	useJUnitPlatform()
 }

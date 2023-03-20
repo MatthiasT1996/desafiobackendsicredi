@@ -15,7 +15,7 @@ public class Pauta {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private long id;
 
     @Column(nullable = false)
     private String nome;
@@ -36,11 +36,11 @@ public class Pauta {
     @OneToMany(mappedBy = "pauta")
     private List<VotacaoPauta> votacaoPautaList;
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 

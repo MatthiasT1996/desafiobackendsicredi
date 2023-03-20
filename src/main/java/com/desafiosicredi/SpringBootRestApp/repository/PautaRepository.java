@@ -15,5 +15,5 @@ public interface PautaRepository extends CrudRepository<Pauta, Integer> {
     public Optional<Pauta> findByNome(String nome);
 
     @Query("SELECT p from Pauta p where p.id = ?1 AND p.fechada = true")
-    List<Pauta> isPautaFechada(UUID idPauta);
+    List<Pauta> isPautaFechada(long idPauta);
 }

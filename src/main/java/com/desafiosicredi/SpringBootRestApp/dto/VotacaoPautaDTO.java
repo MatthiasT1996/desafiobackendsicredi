@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class VotacaoPautaDTO implements Serializable {
 
-    private UUID idPauta;
+    private long idPauta;
 
     private Integer votosSim;
 
@@ -21,11 +21,11 @@ public class VotacaoPautaDTO implements Serializable {
         this.votosNao = 0;
     }
 
-    public UUID getIdPauta() {
+    public long getIdPauta() {
         return idPauta;
     }
 
-    public void setIdPauta(UUID idPauta) {
+    public void setIdPauta(long idPauta) {
         this.idPauta = idPauta;
     }
 
@@ -50,7 +50,7 @@ public class VotacaoPautaDTO implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         VotacaoPautaDTO that = (VotacaoPautaDTO) o;
-        return idPauta.equals(that.idPauta);
+        return idPauta == that.idPauta;
     }
 
     @Override

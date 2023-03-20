@@ -13,7 +13,7 @@ public class Associado {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private long id;
 
     @Column(nullable = false)
     private String cpf;
@@ -33,11 +33,11 @@ public class Associado {
         this.nome = nome;
     }
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -76,7 +76,7 @@ public class VotacaoPautaController {
         VotacaoPautaDTO votacaoPautaDTO = new VotacaoPautaDTO();
         for (VotacaoPauta votacaoPauta :
                 listaVotacaoPauta) {
-            long idPauta = votacaoPauta.getPauta().getId();
+            Integer idPauta = votacaoPauta.getPauta().getId();
             if(idPauta == votacaoPautaDTO.getIdPauta()){
                 if (votacaoPauta.getAprovada()) {
                     votacaoPautaDTO.setVotosSim(votacaoPautaDTO.getVotosSim() + 1);

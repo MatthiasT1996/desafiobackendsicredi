@@ -12,7 +12,7 @@ Swagger para documentação da API
 
 [Documentação API](https://desafio-sicredi-matthias.herokuapp.com/swagger-ui.html#)
 
-[Repopsitório](https://github.com/MatthiasT1996/desafiobackendsicredi)
+[Repositório](https://github.com/MatthiasT1996/desafiobackendsicredi)
 
 # Solução #
 ## Entidades ##

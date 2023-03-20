@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class VotacaoPautaDTO implements Serializable {
 
-    private long idPauta;
+    private Integer idPauta;
 
     private Integer votosSim;
 
@@ -21,11 +21,11 @@ public class VotacaoPautaDTO implements Serializable {
         this.votosNao = 0;
     }
 
-    public long getIdPauta() {
+    public Integer getIdPauta() {
         return idPauta;
     }
 
-    public void setIdPauta(long idPauta) {
+    public void setIdPauta(Integer idPauta) {
         this.idPauta = idPauta;
     }
 

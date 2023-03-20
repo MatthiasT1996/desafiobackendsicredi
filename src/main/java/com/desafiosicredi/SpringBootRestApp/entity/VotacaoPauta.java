@@ -9,7 +9,7 @@ public class VotacaoPauta {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Integer id;
 
     @Column(name = "aprovada", nullable = false)
     private Boolean aprovada;
@@ -22,11 +22,11 @@ public class VotacaoPauta {
     @JoinColumn(name = "id_associado")
     private Associado associado;
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

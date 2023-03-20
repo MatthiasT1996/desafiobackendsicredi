@@ -28,6 +28,20 @@ dependencies {
 //	compile "org.springframework.integration:spring-integration-amqp:6.0.3"
 }
 
+jar {
+	manifest {
+		attributes 'Main-Class': 'com.desafiosicredi.SpringBootRestApp.SpringBootRestAppApplication'
+	}
+}
+
+bootJar {
+	archiveClassifier.set('boot')
+}
+
+jar {
+	archiveClassifier.set('')
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()
